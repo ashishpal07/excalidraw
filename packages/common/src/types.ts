@@ -44,3 +44,8 @@ export const userLoginSchema = z
     message: "username or email must be provided to login.",
     path: ["username", "email"],
   });
+
+export const createRoomSchema = z.object({
+  name: z.string().min(3).max(20),
+  slug: z.string().min(3).max(20),
+});

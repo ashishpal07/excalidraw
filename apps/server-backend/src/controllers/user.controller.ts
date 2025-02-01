@@ -75,18 +75,16 @@ export const loginUser = async (req: Request, res: Response) => {
       return;
     }
 
-    const token = jwt.sign({ userId: findUser.id }, "random_jwt_secret", {
+    const token = jwt.sign({ user: findUser.id }, "random_jwt_secret", {
       expiresIn: "1d",
     });
     res.status(200).json({ message: "Loggedin Successfully.", token });
     return;
   } catch (error) {
-    res
-      .status(500)
-      .json({
-        message: "Something went wrong while login user.",
-        error: error,
-      });
+    res.status(500).json({
+      message: "Something went wrong while login user.",
+      error: error,
+    });
     return;
   }
 };
@@ -131,7 +129,17 @@ export const getUser = async (req: Request, res: Response) => {
       },
     });
 
-    res.status(200).json({ message: "Success." });
+    res
+      .status(200)
+      .json({
+        message: "Success.",
+        user: {
+          id: user?.id,
+          firstName: user?.firstName,
+          lastName: user?.lastName,
+          email: user?.email,
+        },
+      });
     return;
   } catch (error) {
     res
