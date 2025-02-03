@@ -5,7 +5,7 @@ const router: Router = express.Router();
 
 router.post("/register", create);
 
-router.post("login", loginUser);
+router.post("/login", loginUser);
 
 router.get("/:userId", getUser);
 

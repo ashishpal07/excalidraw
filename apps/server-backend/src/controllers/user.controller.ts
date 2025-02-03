@@ -1,8 +1,11 @@
 import { prisma } from "@repo/db/client";
 import { Request, Response } from "express";
 import { createUserSchema, userLoginSchema } from "@repo/common/types";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+
+console.log("env ", process.env.JWT_SECRET);
+
 
 export const create = async (req: Request, res: Response) => {
   try {
@@ -75,7 +78,7 @@ export const loginUser = async (req: Request, res: Response) => {
       return;
     }
 
-    const token = jwt.sign({ user: findUser.id }, "random_jwt_secret", {
+    const token = jwt.sign({ user: findUser.id }, process.env.JWT_SECRET_KEY || 'secretkey', {
       expiresIn: "1d",
     });
     res.status(200).json({ message: "Loggedin Successfully.", token });

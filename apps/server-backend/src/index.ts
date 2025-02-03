@@ -1,6 +1,9 @@
 "use strict";
+import dotenv from "dotenv";
 import express from "express";
 import initRoute from "./routes/index";
+
+dotenv.config();
 
 const app = express();
 app.use(express.json());
