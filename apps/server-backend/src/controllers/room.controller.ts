@@ -9,15 +9,16 @@ export const createRoom = async (req: Request, res: Response) => {
       res.status(411).json({ error: parseData.error });
       return;
     }
+    
+    const userId = req.user?.user;
+    const room = await prisma.room.create({
+      data: {
+        ...parseData.data,
+        adminId: parseInt(userId),
+      }
+    });
 
-    // const room = await prisma.room.create({
-    //   data: {
-    //     ...parseData.data,
-    //     adminId: parseInt(req.user),
-    //   }
-    // });
-
-    // res.status(201).json({ message: "Room Created.", room: room.id });
+    res.status(201).json({ message: "Room Created.", room: room.id });
     return;
   } catch (error) {
     res.status(500).json({ message: "Something went wrong while ceating room.", error: error });
