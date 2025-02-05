@@ -85,7 +85,7 @@ wss.on('connection', (ws, request) => {
         }
       });
     }
-  })
+  });
 
   // ws.send('something');
 });
